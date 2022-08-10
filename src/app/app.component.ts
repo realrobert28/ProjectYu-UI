@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SplashScreenService, PageLoaderService } from './core/_services';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ProjectYu-UI';
+  title = '7C Systems';
+
+  constructor(
+    private _splashScreenService: SplashScreenService,
+    private _pageLoaderService: PageLoaderService
+  ) {}
 }

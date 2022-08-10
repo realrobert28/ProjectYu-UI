@@ -1,0 +1,26 @@
+
+
+<div fxLayout="row" fxLayoutAlign="center center">
+	<button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
+		<div class="user__info" fxLayout="row" fxLayoutAlign="space-between center">
+			<div class="avatar-circle-xs bg__primary">
+				<span class="initials text__white">{{ user?.nameCode }}</span>
+			</div>
+			<span class="mx-2 font-weight-bold mat-body-1" fxHide.lt-md>
+				{{ user?.fullName }}
+			</span>
+		</div>
+	</button>
+
+	<mat-menu #userMenu="matMenu" xPosition="before" [overlapTrigger]="false">
+		<button mat-menu-item type="button" routerLink="/app/account">
+			<mat-icon class="material-icons-outlined">account_circle</mat-icon>
+			<span>My Profile</span>
+		</button>
+
+		<button mat-menu-item type="button" (click)="logout()">
+			<mat-icon class="material-icons-outlined">exit_to_app</mat-icon>
+			<span>Logout</span>
+		</button>
+	</mat-menu>
+</div>
