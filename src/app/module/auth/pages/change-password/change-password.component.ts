@@ -78,10 +78,11 @@ export class ChangePasswordComponent extends BaseComponent {
         this._authService.resetPassword(values)
           .subscribe(
             (res: any) => {
-              this._toastr.notify(
-                res.message,
-                ['bg__success', 'text__white']
-              );
+              this._toastr.notifyAction({
+                title: 'Operation Success.',
+                message: res.message,
+                type: 'success'
+              });
               setTimeout(() => {
                 const credentials: Credentials = {
                   email: values.email,
@@ -105,16 +106,22 @@ export class ChangePasswordComponent extends BaseComponent {
             (data: any) => {
               if (data.app?.tfa_passed) {
                 this.loading = false;
-                this._toastr.notify('Login Successfully!', ['bg__success', 'text__white']);
+                this._toastr.notifyAction({
+                  title: 'Operation Success.',
+                  message: 'Login Successfully!',
+                  type: 'success'
+                });
               }
             },
             /* eslint-disable @typescript-eslint/no-unused-vars */
             (err: any) => {
               this.loading = false;
-              this._toastr.notify(
-                'There was a problem encountered while trying to fulfill your request!',
-                ['bg__danger', 'text__white']
-              );
+
+              this._toastr.notifyAction({
+                title: 'Operation Failed.',
+                message: 'There was a problem encountered while trying to fulfill your request!',
+                type: 'error'
+              });
               this._router.navigateByUrl('/login');
             }
           )
@@ -137,7 +144,11 @@ export class ChangePasswordComponent extends BaseComponent {
         });
     }
 
-    this._toastr.notify(err.message, ['bg__danger', 'text__white']);
+    this._toastr.notifyAction({
+      title: 'Operation Failed.',
+      message: err.message || 'There was a problem encountered!',
+      type: 'error'
+    });
     this.loading = false;
   }
 }

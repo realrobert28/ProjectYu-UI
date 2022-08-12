@@ -37,11 +37,19 @@ export class UserInfoComponent implements OnDestroy {
       .subscribe(
         /* eslint-disable @typescript-eslint/no-unused-vars */
         (res: any) => {
-          this._toastr.notify('You\'ve been logged out to the system successfully!', ['bg__success', 'text__white']);
+          this._toastr.notifyAction({
+            title: 'Logout',
+            message: 'You\'ve been logged out to the system successfully!',
+            type: 'success'
+          });
         },
         /* eslint-disable @typescript-eslint/no-unused-vars */
         (err: any) => {
-          this._toastr.notify('You\'ve been logged out to the system successfully!', ['bg__success', 'text__white']);
+          this._toastr.notifyAction({
+            title: 'Logout',
+            message: 'You\'ve been logged out to the system successfully!',
+            type: 'success'
+          });
         }
       );
   }

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
 import { Store } from '@ngxs/store';
-import { ROLE } from '@core/_contants';
+import { ROLE } from '@core/_constants';
 import {
   superAdminMenuItems,
   adminMenuItems,
   resellerMenuItems,
   userMenuItems,
-} from '@core/_contants/menu';
+} from '@core/_constants/menu';
 import { Menu } from '@core/_models/menu.model';
 import { User } from '@core/_models/user.model';
 import { AuthState } from '@core/_store';

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationComponent} from './components/notification/notification.component';
+import { INotification, IActionNotification } from './components/notification/types';
 
 @Injectable({
   providedIn: 'root'
@@ -8,12 +10,30 @@ export class ToastService {
 
   constructor(private _snackBar: MatSnackBar) {}
 
-  notify(message: string, type: string[] = [], action = 'Close'): void {
-    this._snackBar.open(message, action, {
-      duration: 5000,
+  open(notification: INotification): void {
+    this._snackBar.openFromComponent(NotificationComponent, {
+      data: notification,
       verticalPosition: 'top',
-      horizontalPosition: 'center',
-      panelClass: type
+      horizontalPosition: 'right',
+      panelClass: [
+        'notification', `bg-${notification.color}`
+      ],
+      duration: notification.duration
     });
+  }
+
+  notifyAction({ title, message, type }: IActionNotification): void {
+    const notification: INotification = {
+      title,
+      message,
+      color: type === 'success' ? 'success' : 'danger',
+      icon: {
+        show: true,
+        name: `heroicons_outline:${type === 'success' ? 'check-circle' : 'x-circle'}`
+      },
+      duration: 10000
+    };
+
+    this.open(notification);
   }
 }

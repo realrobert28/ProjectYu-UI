@@ -56,13 +56,21 @@ export class RequestPasswordResetComponent implements OnInit, OnDestroy {
         (res: any) => {
           this.loading = false;
           this.emailSent = true;
-          this._toastr.notify(res.message, ['bg__success', 'text__white']);
+          this._toastr.notifyAction({
+            title: 'Operation Success.',
+            message: res.message,
+            type: 'success'
+          });
           this._router.navigateByUrl('/login');
         },
         (error: any) => {
           this.loading = false;
           this.emailSent = false;
-          this._toastr.notify(error.message || 'There was a problem encountered!', ['bg__danger', 'text__white']);
+          this._toastr.notifyAction({
+            title: 'Operation Failed.',
+            message: error.message || 'There was a problem encountered!',
+            type: 'error'
+          });
         }
       );
     }

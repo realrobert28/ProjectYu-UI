@@ -50,12 +50,19 @@ export class LoginComponent extends BaseComponent implements OnInit {
           .subscribe(
             (data: any) => {
               this.loading = false;
-              this._toastr.notify('Login Successfully!', ['bg-green-500', 'text-white']);
+              this._toastr.notifyAction({
+                title: 'Login',
+                message: 'Login Successfully!',
+                type: 'success'
+              });
             },
             (err: any) => {
-              console.log(err);
               this.loading = false;
-              this._toastr.notify(err.message || 'Invalid Email/Password!', ['bg-red-500', 'text-white']);
+              this._toastr.notifyAction({
+                title: 'Login Failed',
+                message: err.message || 'Invalid Email/Password!',
+                type: 'error'
+              });
             }
           )
       );

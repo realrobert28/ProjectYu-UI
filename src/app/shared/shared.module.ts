@@ -19,10 +19,13 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { ToastService } from './services/taost.service';
 import { ButtonStateComponent } from './button-state/button-state.component';
+import { MatCardModule } from '@angular/material/card';
+import { NotificationComponent } from './services/components/notification/notification.component';
 
 @NgModule({
   declarations: [
-    ButtonStateComponent
+    ButtonStateComponent,
+    NotificationComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -41,6 +44,7 @@ import { ButtonStateComponent } from './button-state/button-state.component';
     MatInputModule,
     MatProgressBarModule,
     MatSelectModule,
+    MatCardModule,
   ],
   exports: [
     CommonModule,

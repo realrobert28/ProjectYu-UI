@@ -1,6 +1,6 @@
 import { BaseModel } from './base.model';
 import { IUser } from '@core/_types/user.interface';
-import { ROLE } from '@core/_contants';
+import { ROLE } from '@core/_constants';
 
 export class User extends BaseModel implements IUser {
   id?: number;

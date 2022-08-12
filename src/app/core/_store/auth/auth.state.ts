@@ -111,7 +111,6 @@ export class AuthState implements NgxsOnInit {
       .pipe(
         /* eslint-disable @typescript-eslint/no-unsafe-call */
         tap((result: any) => {
-          console.log('login');
           this._attemptLogin(patchState, dispatch, result, payload);
 
           /* eslint-disable @typescript-eslint/restrict-template-expressions */
@@ -179,7 +178,6 @@ export class AuthState implements NgxsOnInit {
     if (callback) {
       Object.assign(queryParams, { c: btoa(callback) });
     }
-    console.log(callback);
     dispatch(new Navigate(['/login'], queryParams));
   }
 

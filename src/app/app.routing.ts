@@ -31,6 +31,15 @@ export const routes: Routes = [
           breadcrumb: 'Dashboard',
           allowedRoles: ['super_admin', 'admin', 'reseller', 'user'],
         }
+      },
+      {
+        path: 'products',
+        canActivate: [RoleGuard],
+        loadChildren: () => import('./module/products/products.module').then(m => m.ProductsModule),
+        data: {
+          breadcrumb: 'Products',
+          allowedRoles: ['super_admin', 'admin'],
+        }
       }
     ]
   }
