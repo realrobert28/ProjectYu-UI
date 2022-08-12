@@ -1,14 +1,23 @@
 
 
-<div fxLayout="row" fxLayoutAlign="center center">
+<!-- <div fxLayout="row" fxLayoutAlign="center center">
+  <div class="inline-flex overflow-hidden relative justify-center items-center w-10 h-10 bg-gray-100 rounded-full">
+    <span class="font-medium text-gray-900">{{ user?.nameCode }}</span>
+  </div>
 	<button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
-		<div class="user__info" fxLayout="row" fxLayoutAlign="space-between center">
-			<div class="avatar-circle-xs bg__primary">
-				<span class="initials text__white">{{ user?.nameCode }}</span>
-			</div>
-			<span class="mx-2 font-weight-bold mat-body-1" fxHide.lt-md>
-				{{ user?.fullName }}
-			</span>
+		<div fxLayout="row" fxLayoutAlign="space-between center">
+
+      <div class="inline-flex overflow-hidden relative justify-center items-center w-10 h-10 bg-gray-100 rounded-full">
+        <span class="font-medium text-gray-900">{{ user?.nameCode }}</span>
+      </div>
+      <div>
+        <div class="font-weight-bold" fxHide.lt-md>
+          {{ user?.fullName }}
+        </div>
+        <div class="font-weight-bold" fxHide.lt-md>
+          {{ user?.role }}
+        </div>
+      </div>
 		</div>
 	</button>
 
@@ -17,6 +26,31 @@
 			<mat-icon class="material-icons-outlined">account_circle</mat-icon>
 			<span>My Profile</span>
 		</button>
+
+		<button mat-menu-item type="button" (click)="logout()">
+			<mat-icon class="material-icons-outlined">exit_to_app</mat-icon>
+			<span>Logout</span>
+		</button>
+	</mat-menu>
+</div> -->
+<div fxLayout="row" fxLayoutAlign="center center">
+  <button mat-button [matMenuTriggerFor]="userMenu">
+    <div class="flex items-center space-x-2">
+      <div class="inline-flex overflow-hidden relative justify-center items-center w-10 h-10 bg-gray-100 rounded-full border border-gray-600">
+        <span class="font-medium text-gray-900">{{ user?.nameCode }}</span>
+      </div>
+      <div class="text-left">
+          <div class="text-base font-medium">{{ user?.fullName }}</div>
+          <div class="text-sm font-light text-gray-400">{{ user?.role.replace('_', ' ') | titlecase }}</div>
+      </div>
+    </div>
+	</button>
+
+	<mat-menu #userMenu="matMenu" xPosition="before" [overlapTrigger]="false">
+		<!-- <button mat-menu-item type="button" routerLink="/app/account">
+			<mat-icon class="material-icons-outlined">account_circle</mat-icon>
+			<span>My Profile</span>
+		</button> -->
 
 		<button mat-menu-item type="button" (click)="logout()">
 			<mat-icon class="material-icons-outlined">exit_to_app</mat-icon>

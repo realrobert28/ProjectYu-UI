@@ -13,12 +13,12 @@ import { MenuService } from '@core/_services/menu.service';
 export class MenuComponent implements OnInit {
 
   @Input()
-  public menuItems: any[];
+  public menuItems: any[] = [];
 
   @Input()
-  public menuParentId: number;
+  public menuParentId: number = 0;
 
-  parentMenu: any[];
+  parentMenu: any[] = [];
 
   constructor(private _menuService: MenuService) { }
 
@@ -28,6 +28,5 @@ export class MenuComponent implements OnInit {
 
   onClick(menuId: number): void {
     this._menuService.toggleMenuItem(menuId);
-    this._menuService.closeOtherSubMenus(this.menuItems, menuId);
   }
 }

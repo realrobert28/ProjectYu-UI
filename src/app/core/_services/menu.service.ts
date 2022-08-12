@@ -63,19 +63,6 @@ export class MenuService {
     return result;
   }
 
-  expandActiveSubMenu(menu: Menu[]): void {
-    const url = this._location.path();
-    const activeMenuItem = menu.filter(item => item.routerLink === url);
-    if (activeMenuItem[0]) {
-      let menuItem = activeMenuItem[0];
-      while (menuItem.parentId !== 0) {
-        const parentMenuItem = menu.filter(item => item.id === menuItem.parentId)[0];
-        menuItem = parentMenuItem;
-        this.toggleMenuItem(menuItem.id);
-      }
-    }
-  }
-
   toggleMenuItem(menuId: number): void {
     const menuItem = document.getElementById(`menu-item-${menuId}`);
     const subMenu = document.getElementById(`sub-menu-${menuId}`);
@@ -86,41 +73,6 @@ export class MenuService {
       } else {
         subMenu.classList.add('show');
         menuItem.classList.add('expanded');
-      }
-    }
-  }
-
-  closeOtherSubMenus(menu: Menu[], menuId: number): void {
-    const currentMenuItem = menu.filter(item => item.id === menuId)[0];
-    if (currentMenuItem.parentId === 0 && !currentMenuItem.target) {
-      menu.forEach(item => {
-        if (item.id !== menuId) {
-          const subMenu = document.getElementById(`sub-menu-${item.id}`);
-          const menuItem = document.getElementById(`menu-item-${item.id}`);
-          if (subMenu) {
-            if (subMenu.classList.contains('show')) {
-              subMenu.classList.remove('show');
-              menuItem.classList.remove('expanded');
-            }
-          }
-        }
-      });
-    }
-  }
-
-  closeAllSubMenus(): void {
-    const menu = document.getElementById('vertical-menu');
-    if (menu) {
-      /* eslint-disable */
-      for (let i = 0; i < menu.children[0].children.length; i++) {
-      /* eslint-enable */
-        const child = menu.children[0].children[i];
-        if (child) {
-          if (child.children[0].classList.contains('expanded')) {
-            child.children[0].classList.remove('expanded');
-            child.children[1].classList.remove('show');
-          }
-        }
       }
     }
   }

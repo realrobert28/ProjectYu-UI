@@ -9,12 +9,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { MatMenuModule } from '@angular/material/menu';
 
-import { MenuComponent } from './components/menu/menu.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
-    MenuComponent,
     UserInfoComponent
   ],
   imports: [
@@ -25,7 +24,8 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
     PerfectScrollbarModule,
     RouterModule,
     MatTooltipModule,
-    MatMenuModule
+    MatMenuModule,
+    CommonModule
   ],
   exports: [
     UserInfoComponent

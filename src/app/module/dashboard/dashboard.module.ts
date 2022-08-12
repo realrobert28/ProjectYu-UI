@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
 
 import { DashboardComponent } from './pages/dashboard.component';
+import { DashboardRoutingModule } from './dashboard.routing';
 
 @NgModule({
   declarations: [
@@ -9,6 +10,7 @@ import { DashboardComponent } from './pages/dashboard.component';
   ],
   imports: [
     SharedModule,
+    DashboardRoutingModule,
   ],
   exports: [
   ]

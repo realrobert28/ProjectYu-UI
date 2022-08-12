@@ -24,8 +24,6 @@ export class AuthGuard implements CanActivate {
       .selectOnce(AuthState)
       .pipe(
         map(state => {
-          console.log('token');
-          console.log(state);
           if (state.token && this._authService.isValid(state.token)) {
             return true;
           } else {

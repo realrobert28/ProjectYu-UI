@@ -22,6 +22,7 @@ export class UserInfoComponent implements OnDestroy {
     private _toastr: ToastService
   ) {
     this.user = this._store.selectSnapshot(AuthState.user);
+    // this.user['role'] = this.user?.role?.replace('_', ' ');
   }
 
   ngOnDestroy(): void {

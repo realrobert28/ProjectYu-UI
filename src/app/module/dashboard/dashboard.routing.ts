@@ -6,15 +6,15 @@ import { DashboardComponent } from './pages/dashboard.component';
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'v1',
+    path: 'app/dashboard',
+    redirectTo: '',
     pathMatch: 'full'
   },
   {
-    path: 'v1',
+    path: '',
     component: DashboardComponent,
     data: {
-      breadcrumb: 'v1'
+      breadcrumb: 'Dashboard'
     }
   }
 ];

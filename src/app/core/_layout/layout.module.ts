@@ -9,10 +9,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 import { DefaultComponent } from './default/default.component';
+import { MenuComponent } from '@theme/components/menu/menu.component';
 
 @NgModule({
   declarations: [
-    DefaultComponent
+    DefaultComponent,
+    MenuComponent
   ],
   imports: [
     FlexLayoutModule,
