@@ -16,7 +16,7 @@ export class ToastService {
       verticalPosition: 'top',
       horizontalPosition: 'right',
       panelClass: [
-        'notification', `bg-${notification.color}`
+        'notification', `notification--${notification.color}`
       ],
       duration: notification.duration
     });

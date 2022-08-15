@@ -1,16 +1,17 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BaseComponent } from '@core/_abstract';
-import { Credentials, IPageState, PageState } from '@core/_types';
+import { IPageState, PageState } from '@core/_types';
 import { CustomValidators } from '@core/_utils';
 import { ToastService } from '@shared/services';
 import { ProductsService } from '../../services/products.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { IProduct } from '../../models/index';
 import { MatSort } from '@angular/material/sort';
 import { pageSizeOptions } from '@core/_constants';
 import { IGeneralResponse } from '@core/_models';
+import { takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-products',
@@ -18,6 +19,10 @@ import { IGeneralResponse } from '@core/_models';
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent extends BaseComponent implements OnInit {
+
+  @Output() updateProductEvent = new EventEmitter<string>();
+
+  public filterPanel = false;
 
   public errors: any = {};
 
@@ -100,7 +105,6 @@ export class ProductsComponent extends BaseComponent implements OnInit {
       this._productService.getProducts(this.pageState)
         .subscribe(
           (res: IPageState) => {
-            console.log(res);
             Object.assign(this.paginator, { length: res.meta.total });
             Object.assign(this.dataSource, { data: res.data });
             this.loading = false;
@@ -111,15 +115,18 @@ export class ProductsComponent extends BaseComponent implements OnInit {
     );
   }
 
-  onSubmit(values: Credentials): void {
+  onSubmit(values: IProduct): void {
     if (! this.productForm.valid) {
       return;
     }
     this.submitLoading = true;
     this._productService.saveProduct(values)
-    .pipe()
+    .pipe(takeUntil(this._subscription))
         .subscribe(
-          (res: any) => this._onSuccess(res),
+          (res: any) => {
+            this._onSuccess(res);
+            this.updateProductEvent.emit(values.name);
+          },
           (err: any) => this._onError(err)
         );
   }
@@ -156,8 +163,23 @@ export class ProductsComponent extends BaseComponent implements OnInit {
       type: 'error'
     });
   }
-}
-function takeUntil(_subscription: any): import("rxjs").OperatorFunction<any, unknown> {
-  throw new Error('Function not implemented.');
+
+  /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+  onAppFilter(filters: any): void {
+    Object.assign(this.pageState.filters, { ...filters });
+    this.fetchData({ pageIndex: 0, pageSize: this.pageState.limit });
+  }
+
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  onAppFilteredClear($event: any): void {
+    Object.assign(this.pageState.filters, {
+      name: '',
+      personal_points: '',
+      upline_points: '',
+      date_from: '',
+      date_to: '',
+    });
+    this.fetchData({ pageIndex: 0, pageSize: this.pageState.limit });
+  }
 }
 

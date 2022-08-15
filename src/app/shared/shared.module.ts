@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule  } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -18,14 +18,17 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 
 import { ToastService } from './services/taost.service';
-import { ButtonStateComponent } from './button-state/button-state.component';
 import { MatCardModule } from '@angular/material/card';
 import { NotificationComponent } from './services/components/notification/notification.component';
+import { AppListMenuComponent } from './components/app-list-menu/app-list-menu.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { SelectFilterComponent } from './components/select-filter/select-filter.component';
 
 @NgModule({
   declarations: [
-    ButtonStateComponent,
-    NotificationComponent
+    NotificationComponent,
+    AppListMenuComponent,
+    SelectFilterComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -45,17 +48,25 @@ import { NotificationComponent } from './services/components/notification/notifi
     MatProgressBarModule,
     MatSelectModule,
     MatCardModule,
+    MatMenuModule
   ],
   exports: [
+    FlexLayoutModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    FlexLayoutModule,
-    ButtonStateComponent
+    AppListMenuComponent,
+    SelectFilterComponent
   ],
   providers: [
     ToastService,
-    MatDatepickerModule
+    MatDatepickerModule,
+    {
+      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+      useValue: {
+        duration: 2000
+      }
+    },
   ]
 })
 export class SharedModule { }

@@ -1,4 +1,6 @@
 <div>
-  <app-products></app-products>
+  <app-products (updateProductEvent)="updateProductOptions($event)"></app-products>
+
+  <app-product-codes [updateProductOptions]="isUpdate"></app-product-codes>
 
 </div>

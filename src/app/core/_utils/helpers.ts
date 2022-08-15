@@ -25,6 +25,17 @@ export const isPresent = (obj: any): boolean => {
   return obj !== undefined && obj !== null;
 };
 
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+export const isDate = (obj: any): boolean => {
+  try {
+    const dt = new Date(obj);
+
+    return !isNaN(dt.getTime());
+  } catch (err) {
+    return false;
+  }
+};
+
 export const toAmount = (amount: any, precision = 2): string => {
   return parseFloat(amount).toLocaleString('en', {
     minimumFractionDigits: precision,

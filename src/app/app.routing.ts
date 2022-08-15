@@ -40,6 +40,15 @@ export const routes: Routes = [
           breadcrumb: 'Products',
           allowedRoles: ['super_admin', 'admin'],
         }
+      },
+      {
+        path: 'packages',
+        canActivate: [RoleGuard],
+        loadChildren: () => import('./module/packages/packages.module').then(m => m.PackagesModule),
+        data: {
+          breadcrumb: 'Packages',
+          allowedRoles: ['super_admin', 'admin'],
+        }
       }
     ]
   }

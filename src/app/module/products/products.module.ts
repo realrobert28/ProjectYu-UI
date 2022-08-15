@@ -16,13 +16,22 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ProductFilterComponent } from './components/product-filter/product-filter.component';
+import { ProductCodeFilterComponent } from './components/product-code-filter/product-code-filter.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 
 @NgModule({
   declarations: [
     LandingComponent,
     ProductsComponent,
-    ProductCodesComponent
+    ProductCodesComponent,
+    ProductFilterComponent,
+    ProductCodeFilterComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +46,12 @@ import { MatButtonModule } from '@angular/material/button';
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSelectModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatDatepickerModule,
+    NgxMatSelectSearchModule
   ]
 })
 export class ProductsModule { }

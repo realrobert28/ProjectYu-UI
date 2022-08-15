@@ -26,6 +26,7 @@
     "@ngxs/storage-plugin": "^3.7.4",
     "@ngxs/store": "^3.7.4",
     "material": "^0.4.3",
+    "ngx-mat-select-search": "^4.2.1",
     "ngx-perfect-scrollbar": "^10.1.1",
     "rxjs": "~7.5.0",
     "subsink": "^1.0.2",
