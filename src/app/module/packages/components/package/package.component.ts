@@ -119,7 +119,7 @@ export class PackageComponent extends BaseComponent implements OnInit {
         .subscribe(
           (res: any) => {
             this._onSuccess(res);
-            this.updatePackageEvent.emit(values.id?.toString());
+            this.updatePackageEvent.emit(values.name?.toString());
           },
           (err: any) => this._onError(err)
         );

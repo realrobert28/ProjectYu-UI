@@ -63,7 +63,6 @@ implements OnInit, OnChanges, AfterContentInit, ControlValueAccessor
   }
 
   ngOnInit(): void {
-    console.log(this.itemList);
     this.filteredItems.next(this.itemList.slice());
 
     this.searchControl.valueChanges

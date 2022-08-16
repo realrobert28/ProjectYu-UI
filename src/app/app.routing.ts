@@ -33,6 +33,15 @@ export const routes: Routes = [
         }
       },
       {
+        path: 'users',
+        canActivate: [RoleGuard],
+        loadChildren: () => import('./module/users/users.module').then(m => m.UsersModule),
+        data: {
+          breadcrumb: 'Users',
+          allowedRoles: ['super_admin', 'admin'],
+        }
+      },
+      {
         path: 'products',
         canActivate: [RoleGuard],
         loadChildren: () => import('./module/products/products.module').then(m => m.ProductsModule),
