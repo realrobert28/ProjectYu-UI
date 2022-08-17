@@ -26,6 +26,21 @@
               [formGroup]="form"
               (ngSubmit)="form.valid && onSubmit(form.value)"
             >
+
+            <mat-form-field appearance="outline" color="primary" class="w-full">
+              <mat-label>Membership</mat-label>
+              <mat-select [formControl]="membershipIdControl" name="membership">
+                <mat-option>
+                </mat-option>
+                <mat-option
+                  *ngFor="let item of membershipOptions"
+                  [value]="item.id"
+                >
+                  {{item.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
             <mat-form-field appearance="outline" color="primary" class="w-full">
               <mat-label>Package Name</mat-label>
               <input
@@ -87,6 +102,7 @@
           </div>
         </div>
         <app-package-filter
+          [memberships]="membershipOptions"
           [showPanel]="filterPanel"
           (appFilter)="onAppFilter($event)"
           (appClearFilter)="onAppFilteredClear($event)"
@@ -107,6 +123,21 @@
               class="w-full"
               aria-label="Package List"
             >
+
+              <ng-container matColumnDef="membership.name">
+                <th
+                  scope="col"
+                  mat-header-cell
+                  *matHeaderCellDef
+                  mat-sort-header
+                  class="uppercase font-bold"
+                >
+                  Membership
+                </th>
+                <td mat-cell *matCellDef="let element" class="uppercase text-left">
+                  {{ element.membership.name ?? '--' }}
+                </td>
+              </ng-container>
 
               <ng-container matColumnDef="name">
                 <th

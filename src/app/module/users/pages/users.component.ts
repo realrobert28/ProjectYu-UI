@@ -37,7 +37,7 @@ export class UsersComponent extends BaseComponent implements OnInit {
   public pageSizeOPtions = pageSizeOptions;
 
   public columns: string[] = [
-    'id', 'membership.name', 'package.code', 'fullname', 'email', 'mobile_number', 'address', 'created_at'
+    'id', 'package.code', 'fullname', 'email', 'mobile_number', 'address', 'created_at'
   ];
 
   public userForm!: FormGroup;
@@ -64,15 +64,17 @@ export class UsersComponent extends BaseComponent implements OnInit {
     limit: 5,
     page: 0,
     filters: {
-      name: '',
-      personal_points: '',
-      upline_points: '',
+      code: '',
+      withFullName: '',
+      email: '',
+      mobile: '',
+      date_from: '',
+      date_to: '',
     },
     sort: 'created_at',
     sortDirection: 'desc'
   };
 
-  get membershipIdControl(): any { return this.userForm.controls['membership_id']; }
   get packageCodeIdControl(): any { return this.userForm.controls['package_code_id']; }
   get roleControl(): any { return this.userForm.controls['role']; }
   get firstNameControl(): any { return this.userForm.controls['first_name']; }
@@ -94,7 +96,6 @@ export class UsersComponent extends BaseComponent implements OnInit {
     this.userForm = this._formBuilder.group({
       membership_id: [''],
       package_code_id: [''],
-      role: ['', [Validators.required]],
       first_name: ['', [Validators.required, Validators.minLength(2)]],
       last_name: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
@@ -104,26 +105,15 @@ export class UsersComponent extends BaseComponent implements OnInit {
     });
 
     this.onReload();
-    this.getMembershipOption();
     this.getPackageCodeOptions();
     this.getRoles();
 
-  }
-
-  getMembershipOption(): void {
-    this._userService.getMemberships()
-      .pipe(takeUntil(this._subscription)).subscribe(
-        (res: any) => {
-          this.membershipOptions = res;
-      });
   }
 
   getRoles(): void {
     this._userService.getRoles()
       .pipe(takeUntil(this._subscription)).subscribe(
         (res: any) => {
-          console.log(res);
-          console.log(res.data);
           this.roles = res.map((data: any) => {
             return {
               'label': data.replace('_', ' '),

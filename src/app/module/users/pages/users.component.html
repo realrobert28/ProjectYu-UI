@@ -28,20 +28,6 @@
           >
 
           <mat-form-field appearance="outline" color="primary" class="w-full">
-            <mat-label>Membership</mat-label>
-            <mat-select [formControl]="membershipIdControl" name="membership">
-              <mat-option>
-              </mat-option>
-              <mat-option
-                *ngFor="let item of membershipOptions"
-                [value]="item.id"
-              >
-                {{item.name}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" color="primary" class="w-full">
             <mat-label>Package Code</mat-label>
             <mat-select [formControl]="packageCodeIdControl" name="pacakgeCode">
               <mat-option>
@@ -62,7 +48,7 @@
             </mat-select>
           </mat-form-field>
 
-            <mat-form-field appearance="outline" color="primary" class="w-full">
+            <!-- <mat-form-field appearance="outline" color="primary" class="w-full">
               <mat-label>Role</mat-label>
               <mat-select [formControl]="roleControl" name="role">
                 <mat-option
@@ -75,7 +61,7 @@
               <mat-error *ngIf="roleControl.errors?.required">
                 Role is required
               </mat-error>
-            </mat-form-field>
+            </mat-form-field> -->
 
             <mat-form-field appearance="outline" color="primary" class="w-full">
               <mat-label>First Name</mat-label>
@@ -227,7 +213,6 @@
 
         <app-user-filter
           [showPanel]="filterPanel"
-          [memberships]="membershipOptions"
           (appFilter)="onAppFilter($event)"
           (appClearFilter)="onAppFilteredClear($event)"
         ></app-user-filter>
@@ -261,21 +246,6 @@
                 </th>
                 <td mat-cell *matCellDef="let element" class="uppercase text-left">
                   {{ element.id }}
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="membership.name">
-                <th
-                  scope="col"
-                  mat-header-cell
-                  *matHeaderCellDef
-                  mat-sort-header
-                  class="uppercase font-bold"
-                >
-                  Membership
-                </th>
-                <td mat-cell *matCellDef="let element" class="uppercase text-left">
-                  {{ element.membership.name ?? '--' }}
                 </td>
               </ng-container>
 

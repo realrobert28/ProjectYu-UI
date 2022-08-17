@@ -1,8 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BaseComponent } from '@core/_abstract';
-import { Credentials, IPageState, PageState } from '@core/_types';
-import { CustomValidators } from '@core/_utils';
 import { ToastService } from '@shared/services';
 import { PackageService } from '../../services/package.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,6 +10,9 @@ import { MatSort } from '@angular/material/sort';
 import { pageSizeOptions } from '@core/_constants';
 import { IGeneralResponse } from '@core/_models';
 import { takeUntil } from 'rxjs';
+import { CommonService } from '@core/_services';
+import { PageState, IPageState } from '@core/_types';
+import { IMembership } from 'src/app/module/users/models';
 
 @Component({
   selector: 'app-package',
@@ -29,7 +30,7 @@ export class PackageComponent extends BaseComponent implements OnInit {
   public pageSizeOPtions = pageSizeOptions;
 
   public columns: string[] = [
-    'name', 'created_at'
+    'name', 'membership.name', 'created_at'
   ];
 
   public form!: FormGroup;
@@ -37,6 +38,8 @@ export class PackageComponent extends BaseComponent implements OnInit {
   public loading = false;
 
   public submitLoading = false;
+
+  public membershipOptions: IMembership[] = [];
 
   public dataSource: MatTableDataSource<IPackage> = new MatTableDataSource<IPackage>([]);
 
@@ -50,29 +53,42 @@ export class PackageComponent extends BaseComponent implements OnInit {
     limit: 5,
     page: 0,
     filters: {
+      membership: '',
       name: '',
     },
     sort: 'created_at',
     sortDirection: 'desc'
   };
 
+  get membershipIdControl(): any { return this.form.controls['membership_id']; }
   get nameControl(): any { return this.form.controls['name']; }
 
   constructor(
     private _formBuilder: FormBuilder,
     private _toastr: ToastService,
     private _packageService: PackageService,
+    private _commonService: CommonService,
   ) {
     super();
   }
 
   ngOnInit(): void {
     this.form = this._formBuilder.group({
+      membership_id: [''],
       name: ['', [Validators.required, Validators.minLength(4)]],
     });
 
     this.onReload();
+    this.getMembershipOption();
 
+  }
+
+  getMembershipOption(): void {
+    this._commonService.getMemberships()
+      .pipe(takeUntil(this._subscription)).subscribe(
+        (res: any) => {
+          this.membershipOptions = res;
+      });
   }
 
   onReload(): void {
@@ -168,6 +184,7 @@ export class PackageComponent extends BaseComponent implements OnInit {
   /* eslint-disable @typescript-eslint/no-unused-vars */
   onAppFilteredClear($event: any): void {
     Object.assign(this.pageState.filters, {
+      membership: '',
       name: '',
       date_from: '',
       date_to: '',

@@ -1,9 +1,10 @@
 import { formatDate } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup, AbstractControl, FormControl, FormBuilder } from '@angular/forms';
 import { CustomValidators } from '@core/_utils';
 import { FilterComponent } from '@core/_abstract';
 import { appAnimations } from '@theme/animations';
+import { IMembership } from 'src/app/module/users/models';
 
 @Component({
   selector: 'app-package-filter',
@@ -12,6 +13,10 @@ import { appAnimations } from '@theme/animations';
   animations: appAnimations
 })
 export class PackageFilterComponent extends FilterComponent {
+
+
+  @Input()
+  public memberships!: Array<IMembership>;
 
   public minDate: Date;
   public maxDate: Date;
@@ -22,6 +27,10 @@ export class PackageFilterComponent extends FilterComponent {
 
   set filterPanel(val: boolean) {
     this.showPanel = val;
+  }
+
+  get membershipControl(): AbstractControl {
+    return this.form.get('membership') as FormControl;
   }
 
   get nameControl(): AbstractControl {
@@ -48,6 +57,7 @@ export class PackageFilterComponent extends FilterComponent {
 
   protected initForm(): void {
     this.form = this._formBuilder.group({
+      membership: [null],
       name: [null],
       date_from: [null, CustomValidators.Date],
       date_to: [null, CustomValidators.Date],

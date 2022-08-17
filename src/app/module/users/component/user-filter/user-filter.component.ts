@@ -3,7 +3,6 @@ import { Component, Input } from '@angular/core';
 import { FormGroup, AbstractControl, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { FilterComponent } from '@core/_abstract';
 import { CustomValidators } from '@core/_utils';
-import { ItemOption } from '@shared/components/select-filter/types';
 import { appAnimations } from '@theme/animations';
 import { STATUS_LIST, IStatus } from 'src/app/module/packages/models';
 import { IMembership } from '../../models';
