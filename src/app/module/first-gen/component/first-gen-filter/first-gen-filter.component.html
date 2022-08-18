@@ -11,15 +11,6 @@
       (ngSubmit)="form.valid && applyFilter(form.value)"
     >
       <div fxLayout="row wrap">
-        <mat-form-field
-          appearance="outline"
-          class="p-1"
-          fxFlex="100"
-          fxFlex.gt-sm="33.3"
-        >
-          <mat-label>Registered By</mat-label>
-          <input formControlName="withUsedBy" matInput placeholder="Used By" />
-        </mat-form-field>
 
         <mat-form-field
           appearance="outline"
@@ -27,30 +18,10 @@
           fxFlex="100"
           fxFlex.gt-sm="33.3"
         >
-          <mat-label>Product Name</mat-label>
-          <input formControlName="withProductName" matInput placeholder="Product Name" />
-        </mat-form-field>
-
-        <mat-form-field
-          appearance="outline"
-          class="p-1"
-          fxFlex="100"
-          fxFlex.gt-sm="33.3"
-        >
-          <mat-label>Product Code</mat-label>
-          <input formControlName="withProductCode" matInput placeholder="Product Code" />
-        </mat-form-field>
-
-        <mat-form-field
-          appearance="outline"
-          class="p-1"
-          fxFlex="100"
-          fxFlex.gt-sm="33.3"
-        >
-          <mat-label>Gain</mat-label>
-          <input formControlName="gain" matInput placeholder="Gain" />
-          <mat-error *ngIf="gainControl.errors?.numeric">
-            Please input numeric.
+          <mat-label>Name</mat-label>
+          <input formControlName="name" matInput placeholder="Name" />
+          <mat-error *ngIf="nameControl.errors?.alphaspace">
+            Invalid Name
           </mat-error>
         </mat-form-field>
 
@@ -59,12 +30,20 @@
           class="p-1"
           fxFlex="100"
           fxFlex.gt-sm="33.3"
-        >
-          <mat-label>Points</mat-label>
-          <input formControlName="points" matInput placeholder="Points" />
-          <mat-error *ngIf="pointsControl.errors?.numeric">
-            Please input numeric.
-          </mat-error>
+          >
+          <mat-label>Membership</mat-label>
+          <mat-select
+            matSelect
+            placeholder="Membership"
+            formControlName="membership"
+          >
+            <mat-option
+              *ngFor="let item of memberships"
+              [value]="item.id"
+            >
+              {{ item.name }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
 
         <mat-form-field
@@ -73,7 +52,7 @@
           fxFlex="100"
           fxFlex.gt-sm="33.3"
         >
-          <mat-label>Date Used</mat-label>
+          <mat-label>Created</mat-label>
           <mat-date-range-input
             [rangePicker]="appRangePicker"
             [min]="minDate"
@@ -81,7 +60,7 @@
           >
             <input
               matStartDate
-              formControlName="used_date_from"
+              formControlName="date_from"
               placeholder="Start Date"
               matInput
               aria-label="Start Date"
@@ -89,7 +68,7 @@
             />
             <input
               matEndDate
-              formControlName="used_date_to"
+              formControlName="date_to"
               placeholder="End Date"
               matInput
               aria-label="End Date"
@@ -104,7 +83,7 @@
           <mat-date-range-picker #appRangePicker></mat-date-range-picker>
 
           <mat-error
-            *ngIf="usedDateFromControl.errors?.date || usedDateToControl.errors?.date"
+            *ngIf="dateFromControl.errors?.date || dateToControl.errors?.date"
           >
             Invalid Date
           </mat-error>

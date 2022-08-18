@@ -6,18 +6,21 @@ import { MatTableDataSource } from '@angular/material/table';
 import { BaseComponent } from '@core/_abstract';
 import { pageSizeOptions } from '@core/_constants';
 import { IGeneralResponse } from '@core/_models';
-import { PageState, IPageState } from '@core/_types';
+import { CommonService } from '@core/_services';
+import { IUser, PageState, IPageState } from '@core/_types';
 import { ToastService } from '@shared/services';
 import { takeUntil } from 'rxjs';
-import { IProduct } from 'src/app/module/products/models';
-import { RegisterProductCodeService } from '../../services/register-product-code.service';
+import { IMembership } from 'src/app/module/users/models';
+import { FirstGenService } from '../../services/first-gen.service'
 
 @Component({
-  selector: 'app-register-product-code',
-  templateUrl: './register-product-code.component.html',
-  styleUrls: ['./register-product-code.component.scss']
+  selector: 'app-first-gen',
+  templateUrl: './first-gen.component.html',
+  styleUrls: ['./first-gen.component.scss']
 })
-export class RegisterProductCodeComponent extends BaseComponent implements OnInit {
+export class FirstGenComponent extends BaseComponent implements OnInit {
+
+  public membershipOptions: IMembership[] = [];
 
   public filterPanel = false;
 
@@ -26,16 +29,16 @@ export class RegisterProductCodeComponent extends BaseComponent implements OnIni
   public pageSizeOPtions = pageSizeOptions;
 
   public columns: string[] = [
-    'user.fullname', 'productCode.product.name', 'productCode.code', 'gain', 'points'
+    'users.fullname', 'packageCode.membership', 'created_at'
   ];
 
-  public form!: FormGroup;
+  public userForm!: FormGroup;
 
   public loading = false;
 
   public submitLoading = false;
 
-  public dataSource: MatTableDataSource<IProduct> = new MatTableDataSource<IProduct>([]);
+  public dataSource: MatTableDataSource<IUser> = new MatTableDataSource<IUser>([]);
 
   @ViewChild(MatPaginator, {static: true})
   public paginator: MatPaginator | null = null;
@@ -44,36 +47,48 @@ export class RegisterProductCodeComponent extends BaseComponent implements OnIni
   public sort: MatSort| null = null;
 
   public pageState: PageState = {
-    limit: 10,
+    limit: 5,
     page: 0,
     filters: {
-      withProductName: '',
-      withProductCode: '',
-      withUsedBy: '',
-      used_date_from: '',
-      used_date_to: '',
+      membership: '',
+      name: '',
+      date_from: '',
+      date_to: '',
     },
-    sort: 'id',
+    sort: 'created_at',
     sortDirection: 'desc'
   };
 
-  get codeControl(): any { return this.form.controls['code']; }
+  get packageCodeControl(): any { return this.userForm.controls['package_code']; }
+  get firstNameControl(): any { return this.userForm.controls['first_name']; }
+  get lastNameControl(): any { return this.userForm.controls['last_name']; }
+  get emailControl(): any { return this.userForm.controls['email']; }
+  get mobileControl(): any { return this.userForm.controls['mobile_number']; }
+  get addressControl(): any { return this.userForm.controls['address']; }
+  get passwordControl(): any { return this.userForm.controls['password']; }
 
   constructor(
     private _formBuilder: FormBuilder,
     private _toastr: ToastService,
-    private _registerProductCodeService: RegisterProductCodeService,
+    private _firstGenService: FirstGenService,
+    private _commonService: CommonService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.form = this._formBuilder.group({
-      code: ['', [Validators.required]],
+    this.userForm = this._formBuilder.group({
+      package_code: ['', Validators.required],
+      first_name: ['', [Validators.required, Validators.minLength(2)]],
+      last_name: ['', [Validators.required, Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.email]],
+      mobile_number: ['', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(11), Validators.maxLength(11)]],
+      address: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
 
     this.onReload();
-
+    this.getMembershipOption();
   }
 
   onReload(): void {
@@ -82,6 +97,14 @@ export class RegisterProductCodeComponent extends BaseComponent implements OnIni
       pageSize: this.pageState.limit,
       length:  this.paginator?.length
     });
+  }
+
+  getMembershipOption(): void {
+    this._commonService.getMemberships()
+      .pipe(takeUntil(this._subscription)).subscribe(
+        (res: any) => {
+          this.membershipOptions = res;
+      });
   }
 
   /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -97,7 +120,7 @@ export class RegisterProductCodeComponent extends BaseComponent implements OnIni
     this.loading = true;
     Object.assign(this.pageState, { page: pageState.pageIndex, limit: pageState.pageSize });
     this.subs.add(
-      this._registerProductCodeService.getRegisteredProducts(this.pageState)
+      this._firstGenService.getFirstGen(this.pageState)
         .subscribe(
           (res: IPageState) => {
             Object.assign(this.paginator, { length: res.meta.total });
@@ -110,17 +133,17 @@ export class RegisterProductCodeComponent extends BaseComponent implements OnIni
     );
   }
 
-  onSubmit(values: IProduct): void {
-    if (! this.form.valid) {
+  onSubmit(values: IUser): void {
+    if (! this.userForm.valid) {
       return;
     }
     this.submitLoading = true;
-    this._registerProductCodeService.registerProductCode(values)
+    this._firstGenService.saveFirstGen(values)
     .pipe(takeUntil(this._subscription))
         .subscribe(
           (res: any) => {
             this._onSuccess(res);
-            this.onReload();
+            this.userForm.reset();
           },
           (err: any) => this._onError(err)
         );
@@ -130,7 +153,7 @@ export class RegisterProductCodeComponent extends BaseComponent implements OnIni
     this.submitLoading = false;
     this.onReload();
     this._toastr.notifyAction({
-      title: 'Product Code Registered.',
+      title: 'User Saved.',
       message: res.message,
       type: 'success'
     });
@@ -143,7 +166,7 @@ export class RegisterProductCodeComponent extends BaseComponent implements OnIni
       });
 
       Object.keys(this.errors).forEach((prop) => {
-        const formControl = this.form.get(prop);
+        const formControl = this.userForm.get(prop);
         if (formControl) {
           formControl.setErrors({
             serverError: this.errors[prop]
@@ -168,15 +191,13 @@ export class RegisterProductCodeComponent extends BaseComponent implements OnIni
   /* eslint-disable @typescript-eslint/no-unused-vars */
   onAppFilteredClear($event: any): void {
     Object.assign(this.pageState.filters, {
-      withProductName: '',
-      withProductCode: '',
-      withUsedBy: '',
-      gain: '',
-      points: '',
-      used_date_from: '',
-      used_date_to: '',
+      membership: '',
+      name: '',
+      date_from: '',
+      date_to: '',
     });
     this.fetchData({ pageIndex: 0, pageSize: this.pageState.limit });
   }
 }
+
 

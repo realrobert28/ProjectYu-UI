@@ -42,6 +42,14 @@ export class RegisterProductFilterComponent extends FilterComponent {
     return this.form.get('code') as FormControl;
   }
 
+  get gainControl(): AbstractControl {
+    return this.form.controls.gain;
+  }
+
+  get pointsControl(): AbstractControl {
+    return this.form.controls.points;
+  }
+
   get usedDateFromControl(): AbstractControl {
     return this.form.controls.used_date_from;
   }
@@ -64,7 +72,9 @@ export class RegisterProductFilterComponent extends FilterComponent {
     this.form = this._formBuilder.group({
       withUsedBy: [null],
       withProductName: [null],
-      code: [null],
+      withProductCode: [null],
+      gain: [null, CustomValidators.numeric],
+      points: [null, CustomValidators.numeric],
       used_date_from: [null, CustomValidators.Date],
       used_date_to: [null, CustomValidators.Date],
     });
@@ -78,7 +88,7 @@ export class RegisterProductFilterComponent extends FilterComponent {
 
     const filters = {
       ...values,
-      used_date_to: values.used_date_to
+        used_date_to: values.used_date_to
         ? formatDate(new Date(values.used_date_to), 'yyyy-MM-dd', 'en-EU')
         : null,
         used_date_from: values.used_date_from

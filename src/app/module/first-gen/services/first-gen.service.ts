@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { ApiService } from '@core/_services';
 import { PageState, IPageState } from '@core/_types';
 import { setFilters } from '@core/_utils';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RegisterProductCodeService {
-
+export class FirstGenService {
   constructor(private _apiService: ApiService) { }
 
-  getRegisteredProducts(pageState: PageState): Observable<IPageState> {
+  getFirstGen(pageState: PageState): Observable<IPageState> {
     const params = {
       ...setFilters(pageState.filters ?? {}),
       limit: pageState.limit,
@@ -20,10 +19,10 @@ export class RegisterProductCodeService {
       direction: pageState.sortDirection || 'desc'
     };
 
-    return this._apiService.get('/v1/reseller/', params);
+    return this._apiService.get('/v1/reseller/first-gen', params);
   }
 
-  registerProductCode(payload: any): Observable<any> {
-    return this._apiService.post('/v1/reseller', payload);
+  saveFirstGen(payload: any): Observable<any> {
+    return this._apiService.post('/v1/reseller/first-gen', payload);
   }
 }

@@ -86,27 +86,40 @@
               aria-label="Product List"
             >
 
-              <ng-container matColumnDef="usesBy.used_by">
+              <ng-container matColumnDef="user.fullname">
                 <th
                   scope="col"
                   mat-header-cell
                   *matHeaderCellDef
-                  mat-sort-header
                   class="uppercase font-bold"
                 >
                   Register By
                 </th>
                 <td mat-cell *matCellDef="let element" class="text-left text-sm">
                   <div>
-                    {{ element.usesBy.used_by }}
+                    {{ element.user.fullname }}
                   </div>
                   <div class="text-gray-400">
-                    {{ element.date_used | date:'MMM d, y' }}
+                    {{ element.productCode.date_used | date:'MMM d, y' }}
                   </div>
                 </td>
               </ng-container>
 
-              <ng-container matColumnDef="code">
+              <ng-container matColumnDef="productCode.product.name">
+                <th
+                  scope="col"
+                  mat-header-cell
+                  *matHeaderCellDef
+                  class="uppercase font-bold"
+                >
+                  Product Name
+                </th>
+                <td mat-cell *matCellDef="let element" class="uppercase text-left">
+                  {{ element.productCode.product.name }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="productCode.code">
                 <th
                   scope="col"
                   mat-header-cell
@@ -117,26 +130,11 @@
                   Product Code
                 </th>
                 <td mat-cell *matCellDef="let element" class="uppercase text-left">
-                  {{ element.code }}
+                  {{ element.productCode.code }}
                 </td>
               </ng-container>
 
-              <ng-container matColumnDef="product.name">
-                <th
-                  scope="col"
-                  mat-header-cell
-                  *matHeaderCellDef
-                  mat-sort-header
-                  class="uppercase font-bold"
-                >
-                  Product Name
-                </th>
-                <td mat-cell *matCellDef="let element" class="uppercase text-left">
-                  {{ element.product.name }}
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="product.gain">
+              <ng-container matColumnDef="gain">
                 <th
                   scope="col"
                   mat-header-cell
@@ -147,11 +145,11 @@
                   Gain
                 </th>
                 <td mat-cell *matCellDef="let element" class="text-right">
-                  {{ element.product.gain | currency:'PHP':'symbol-narrow'}}
+                  {{ element.gain | currency:'PHP':'symbol-narrow'}}
                 </td>
               </ng-container>
 
-              <ng-container matColumnDef="product.points">
+              <ng-container matColumnDef="points">
                 <th
                   scope="col"
                   mat-header-cell
@@ -162,7 +160,7 @@
                   Points
                 </th>
                 <td mat-cell *matCellDef="let element" class="text-right text-green-800">
-                  {{ element.product.points || '--' }}
+                  {{ element.points || '--' }}
                 </td>
               </ng-container>
 

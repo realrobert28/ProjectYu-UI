@@ -66,6 +66,15 @@ export const routes: Routes = [
         loadChildren: () => import('./module/register-product-code/register-product-code.module').then(m => m.RegisterProductCodeModule),
         data: {
           breadcrumb: 'Product Codes',
+          allowedRoles: [ROLE.SUPERADMIN, ROLE.ADMIN, ROLE.RESELLER, ROLE.USER],
+        }
+      },
+      {
+        path: 'first-gen',
+        canActivate: [RoleGuard],
+        loadChildren: () => import('./module/first-gen/first-gen.module').then(m => m.FirstGenModule),
+        data: {
+          breadcrumb: 'First Gen',
           allowedRoles: [ROLE.SUPERADMIN, ROLE.ADMIN, ROLE.RESELLER],
         }
       }
