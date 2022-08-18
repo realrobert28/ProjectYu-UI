@@ -1,4 +1,5 @@
 import { Routes, RouterModule } from '@angular/router';
+import { ROLE } from '@core/_constants';
 import { DefaultComponent } from '@core/_layout/default/default.component';
 import { AuthGuard, RoleGuard} from './core/_guards';
 
@@ -29,7 +30,7 @@ export const routes: Routes = [
         loadChildren: () => import('./module/dashboard/dashboard.module').then(m => m.DashboardModule),
         data: {
           breadcrumb: 'Dashboard',
-          allowedRoles: ['super_admin', 'admin', 'reseller', 'user'],
+          allowedRoles: [ROLE.SUPERADMIN, ROLE.ADMIN, ROLE.RESELLER, ROLE.USER],
         }
       },
       {
@@ -38,7 +39,7 @@ export const routes: Routes = [
         loadChildren: () => import('./module/users/users.module').then(m => m.UsersModule),
         data: {
           breadcrumb: 'Users',
-          allowedRoles: ['super_admin', 'admin'],
+          allowedRoles: [ROLE.SUPERADMIN, ROLE.ADMIN],
         }
       },
       {
@@ -47,7 +48,7 @@ export const routes: Routes = [
         loadChildren: () => import('./module/products/products.module').then(m => m.ProductsModule),
         data: {
           breadcrumb: 'Products',
-          allowedRoles: ['super_admin', 'admin'],
+          allowedRoles: [ROLE.SUPERADMIN, ROLE.ADMIN],
         }
       },
       {
@@ -56,7 +57,16 @@ export const routes: Routes = [
         loadChildren: () => import('./module/packages/packages.module').then(m => m.PackagesModule),
         data: {
           breadcrumb: 'Packages',
-          allowedRoles: ['super_admin', 'admin'],
+          allowedRoles: [ROLE.SUPERADMIN, ROLE.ADMIN],
+        }
+      },
+      {
+        path: 'product-code',
+        canActivate: [RoleGuard],
+        loadChildren: () => import('./module/register-product-code/register-product-code.module').then(m => m.RegisterProductCodeModule),
+        data: {
+          breadcrumb: 'Product Codes',
+          allowedRoles: [ROLE.SUPERADMIN, ROLE.ADMIN, ROLE.RESELLER],
         }
       }
     ]
