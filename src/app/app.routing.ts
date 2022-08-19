@@ -1,7 +1,9 @@
 import { Routes, RouterModule } from '@angular/router';
 import { ROLE } from '@core/_constants';
 import { DefaultComponent } from '@core/_layout/default/default.component';
-import { AuthGuard, RoleGuard} from './core/_guards';
+import { AuthGuard, RoleGuard} from '@core/_guards';
+import { NotAllowedComponent } from '@core/_pages/not-allowed/not-allowed.component';
+import { NotFoundComponent } from '@core/_pages/not-found/not-found.component';
 
 export const routes: Routes = [
   {
@@ -79,6 +81,19 @@ export const routes: Routes = [
         }
       }
     ]
+  },
+  {
+    path: 'forbidden',
+    component: NotAllowedComponent
+  },
+  {
+    path: 'page_not_found',
+    component: NotFoundComponent
+  },
+  {
+    path: '**',
+    redirectTo: '/page_not_found',
+    pathMatch: 'full'
   }
 ];
 

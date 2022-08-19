@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class UsersService  {
+export class UsersService {
 
   constructor(private _apiService: ApiService) { }
 
@@ -47,5 +47,9 @@ export class UsersService  {
       direction: 'desc',
     };
     return this._apiService.get('/v1/package-codes', params);
+  }
+
+  userActivate(id: number, payload: any): Observable<any> {
+    return this._apiService.post(`/v1/users/${id}/activate`, payload);
   }
 }

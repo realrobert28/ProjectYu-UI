@@ -36,7 +36,7 @@
         placeholder="Password"
         aria-label="Password"
       />
-      <!-- <button
+      <button
         mat-icon-button
         matSuffix
         type="button"
@@ -47,7 +47,7 @@
         <mat-icon class="material-icons-outlined input__icon">
           {{ hide ? 'visibility_off_outline' : 'visibility_outline' }}
         </mat-icon>
-      </button> -->
+      </button>
       <mat-error *ngIf="passwordControl.errors?.required">
         Password is required
       </mat-error>

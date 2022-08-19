@@ -19,6 +19,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { SharedModule } from '@shared/shared.module';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { UserFilterComponent } from './component/user-filter/user-filter.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -44,7 +46,9 @@ import { UserFilterComponent } from './component/user-filter/user-filter.compone
     MatIconModule,
     MatTooltipModule,
     MatDatepickerModule,
-    NgxMatSelectSearchModule
+    NgxMatSelectSearchModule,
+    MatMenuModule,
+    MatDialogModule
   ]
 })
 export class UsersModule { }

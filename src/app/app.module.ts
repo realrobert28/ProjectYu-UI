@@ -30,6 +30,8 @@ import {
   PerfectScrollbarConfigInterface
 } from 'ngx-perfect-scrollbar';
 import { SplashScreenService } from '@core/_services';
+import { NotAllowedComponent } from './core/_pages/not-allowed/not-allowed.component';
+import { NotFoundComponent } from './core/_pages/not-found/not-found.component';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   wheelPropagation: true,
   suppressScrollX: true
@@ -38,6 +40,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 @NgModule({
   declarations: [
     AppComponent,
+    NotAllowedComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

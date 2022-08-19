@@ -139,6 +139,7 @@ export class ProductsComponent extends BaseComponent implements OnInit {
       message: res.message,
       type: 'success'
     });
+    this.productForm.reset();
   }
 
   private _onError(err: IGeneralResponse): void {

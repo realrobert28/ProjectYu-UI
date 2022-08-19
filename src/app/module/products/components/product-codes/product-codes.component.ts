@@ -207,6 +207,7 @@ export class ProductCodesComponent extends BaseComponent implements OnInit, OnCh
       message: res.message,
       type: 'success'
     });
+    this.productCodeForm.reset();
   }
 
   private _onError(err: IGeneralResponse): void {

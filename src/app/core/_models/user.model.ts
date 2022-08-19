@@ -8,10 +8,12 @@ export class User extends BaseModel implements IUser {
   lastName?: string;
   first_name?: string;
   last_name?: string;
-  email: string;
+  email?: string;
   isActive?: any;
   role?: string;
   permissions?: string[];
+  rank?: string;
+  package?: string;
   createdAt?: string;
   updatedAt?: string;
   isParentAgent?: boolean;

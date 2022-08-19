@@ -11,30 +11,6 @@
       (ngSubmit)="form.valid && applyFilter(form.value)"
     >
       <div fxLayout="row wrap">
-
-        <!-- <mat-form-field
-          appearance="outline"
-          class="p-1"
-          fxFlex="100"
-          fxFlex.gt-sm="33.3"
-          >
-          <mat-label>Membership</mat-label>
-          <mat-select
-            matSelect
-            placeholder="Membership"
-            formControlName="membership"
-          >
-            <mat-option></mat-option>
-            <mat-option
-              *ngFor="let item of memberships"
-              [value]="item.id"
-            >
-              {{ item.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field> -->
-
-
         <mat-form-field
           appearance="outline"
           class="p-1"

@@ -5,23 +5,23 @@
       fxLayoutAlign="space-between center"
       class="w-full">
 
-      <a routerLink="/" class="mr-60 md:mr-10 h-14">
+      <a routerLink="/" class="mr-60 md:mr-10 h-14 hidden md:block">
         <img src="assets/images/logo/7c-logo.png" class="mr-3 h-9 sm:h-12" alt="logo" />
       </a>
       <div
 					fxLayout="row"
 					fxLayoutAlign="start center"
           class="w-full">
-        <div class="mr-20">
+        <!-- <div class="mr-20">
           <div class="hidden w-full md:block md:w-auto">
             <div class="relative flex w-full flex-wrap items-stretch">
               <span class="z-10 h-full leading-snug font-normal text-center text-slate-300 absolute bg-transparent rounded text-base items-center justify-center w-5 pl-2 py-1.5">
                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
               </span>
-              <input type="text" id="search" class="bg-gray-100 text-gray-600 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full py-2 pl-10" placeholder="Search">
+              <input type="text" id="search" class="bg-gray-100 text-gray-600 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full py-2 pl-10 hide" placeholder="Search">
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div class="hidden w-full md:block md:w-auto mr-20" id="navbar-default">
           <nx-menu-items [menuItems]="menuItems" [menuParentId]="0"></nx-menu-items>
@@ -29,30 +29,27 @@
       </div>
 
       <div fxLayout="row" fxLayoutAlign="end center" fxFlex fxHide fxShow.gt-xs>
-        <button mat-icon-button type="button">
+        <!-- <button mat-icon-button type="button">
           <img src="assets/images/svg/settings-icon.svg" alt="settings icon"/>
-        </button>
+        </button> -->
         <button mat-icon-button type="button">
           <img src="assets/images/svg/notification-icon.svg" alt="notification icon"/>
         </button>
         <nx-user-info></nx-user-info>
       </div>
     </div>
-    <!-- <div
-      fxHide
-      class="container flex flex-wrap justify-between items-center mx-auto">
+    <div
+      class="container flex flex-wrap justify-between items-center mx-auto sm:hidden">
       <a href="https://flowbite.com/" class="flex items-center">
           <img src="assets/images/logo/7c-logo.png" class="mr-3 h-9 sm:h-12" alt="Flowbite Logo" />
           <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
       </a>
-      <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-800 dark:text-green-800 dark:hover:bg-white dark:focus:ring-green-800" aria-controls="navbar-default" aria-expanded="false">
+      <button onClick="toggle()" data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-800 dark:text-green-800 dark:hover:bg-white dark:focus:ring-green-800" aria-controls="navbar-default" aria-expanded="false">
         <span class="sr-only">Open main menu</span>
         <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
       </button>
-    </div> -->
+    </div>
   </nav>
 
-  <div class="container mx-auto px-4">
-    <router-outlet></router-outlet>
-  </div>
+  <router-outlet></router-outlet>
 </div>

@@ -134,6 +134,7 @@ export class RegisterProductCodeComponent extends BaseComponent implements OnIni
       message: res.message,
       type: 'success'
     });
+    this.form.reset();
   }
 
   private _onError(err: IGeneralResponse): void {

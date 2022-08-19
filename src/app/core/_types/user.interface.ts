@@ -1,14 +1,15 @@
 export interface IUser {
   id?: number;
-  firstName?: string;
   first_name?: string;
   last_name?: string;
-  lastName?: string;
-  email: string;
-  isActive?: any;
+  email?: string;
+  mobile_number?: string;
+  address?: string;
+  is_active?: any;
   role?: string;
   permissions?: string[];
-  isParentAgent?: boolean;
+  rank?: string;
+  package?: string;
   createdAt?: string;
   updatedAt?: string;
 }

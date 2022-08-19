@@ -5,4 +5,10 @@ export enum ROLE {
   USER = 'user',
 }
 
+export const ROLES = {
+  SUPERADMIN: 'super_admin',
+  RESELLER: 'reseller',
+  USER: 'user',
+};
+
 export type RoleTypes = ROLE.ADMIN | ROLE.RESELLER | ROLE.USER;

@@ -59,4 +59,9 @@ export class DefaultComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.mobileQuery.removeEventListener('change', this._mobileQueryListener);
   }
+
+  toggle():void
+  {
+
+  }
 }

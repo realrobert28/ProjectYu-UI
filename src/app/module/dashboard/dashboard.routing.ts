@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { DashboardComponent } from './pages/dashboard.component';
+import { LandingComponent } from './pages/landing/landing.component';
 
 const routes: Routes = [
   {
@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: DashboardComponent,
+    component: LandingComponent,
     data: {
       breadcrumb: 'Dashboard'
     }

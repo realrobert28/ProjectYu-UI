@@ -37,7 +37,7 @@ export class UsersComponent extends BaseComponent implements OnInit {
   public pageSizeOPtions = pageSizeOptions;
 
   public columns: string[] = [
-    'id', 'package.code', 'fullname', 'email', 'mobile_number', 'address', 'created_at'
+    'id', 'package.code', 'fullname', 'email', 'mobile_number', 'address', 'created_at', 'action'
   ];
 
   public userForm!: FormGroup;
@@ -94,6 +94,7 @@ export class UsersComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.userForm = this._formBuilder.group({
+      id: [''],
       membership_id: [''],
       package_code_id: [''],
       first_name: ['', [Validators.required, Validators.minLength(2)]],
@@ -269,6 +270,39 @@ export class UsersComponent extends BaseComponent implements OnInit {
       date_to: '',
     });
     this.fetchData({ pageIndex: 0, pageSize: this.pageState.limit });
+  }
+
+  onActivate(id: number, is_active: boolean): void
+  {
+    const payload = {
+      'set': !is_active
+    };
+
+    this._userService.userActivate(id, payload)
+    .pipe(takeUntil(this._subscription))
+        .subscribe(
+          (res: any) => {
+            this.onReload();
+            this._toastr.notifyAction({
+              title: 'User.',
+              message: res.message,
+              type: 'success'
+            });
+          },
+          (err: any) => this._onError(err)
+        );
+  }
+
+  onEdit(data: IUser){
+    // this.userForm.patchValue({
+    //   id: data.id,
+    //   first_name: data.first_name,
+    //   last_name: [data.last_name, [Validators.required, Validators.minLength(2)]],
+    //   email: [data.email, [Validators.required, Validators.email]],
+    //   mobile_number: [data.mobile_number, [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(11), Validators.maxLength(11)]],
+    //   address: [data.address, [Validators.required]],
+    //   password: ['', [Validators.required, Validators.minLength(6)]],
+    // });
   }
 }
 
