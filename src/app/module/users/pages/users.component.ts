@@ -75,6 +75,7 @@ export class UsersComponent extends BaseComponent implements OnInit {
     sortDirection: 'desc'
   };
 
+  get idControl(): any { return this.userForm.controls['id']; }
   get packageCodeIdControl(): any { return this.userForm.controls['package_code_id']; }
   get roleControl(): any { return this.userForm.controls['role']; }
   get firstNameControl(): any { return this.userForm.controls['first_name']; }
@@ -94,15 +95,15 @@ export class UsersComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.userForm = this._formBuilder.group({
-      id: [''],
-      membership_id: [''],
-      package_code_id: [''],
-      first_name: ['', [Validators.required, Validators.minLength(2)]],
-      last_name: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]],
-      mobile_number: ['', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(11), Validators.maxLength(11)]],
-      address: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      id: [null],
+      membership_id: [null],
+      package_code_id: [null],
+      first_name: [null, [Validators.required, Validators.minLength(2)]],
+      last_name: [null, [Validators.required, Validators.minLength(2)]],
+      email: [null, [Validators.required, Validators.email]],
+      mobile_number: [null, [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(11), Validators.maxLength(11)]],
+      address: [null, [Validators.required]],
+      password: [null, [Validators.required, Validators.minLength(6)]],
     });
 
     this.onReload();
@@ -202,28 +203,43 @@ export class UsersComponent extends BaseComponent implements OnInit {
     );
   }
 
-  onSubmit(values: IUser): void {
+  onSubmit(values: any): void {
     if (! this.userForm.valid) {
       return;
     }
     this.submitLoading = true;
-    this._userService.saveUser(values)
-    .pipe(takeUntil(this._subscription))
+    if(this.idControl.value) {
+      Object.keys(values).forEach((key) => (values[key] == null) && delete values[key]);
+      this._userService.updateUser(this.idControl.value, values)
+      .pipe(takeUntil(this._subscription))
+          .subscribe(
+            (res: any) => {
+              this._onSuccess('User Updated.',res);
+              this.getPackageCodeOptions();
+              this.onCancel();
+            },
+            (err: any) => this._onError(err)
+          );
+    } else {
+
+      this._userService.saveUser(values)
+      .pipe(takeUntil(this._subscription))
         .subscribe(
           (res: any) => {
-            this._onSuccess(res);
+            this._onSuccess('User Saved.',res);
             this.getPackageCodeOptions();
-            this.userForm.reset();
+            this.onCancel();
           },
           (err: any) => this._onError(err)
         );
+    }
   }
 
-  private _onSuccess(res: IGeneralResponse): void {
+  private _onSuccess(mes: string, res: IGeneralResponse): void {
     this.submitLoading = false;
     this.onReload();
     this._toastr.notifyAction({
-      title: 'User Saved.',
+      title: mes,
       message: res.message,
       type: 'success'
     });
@@ -293,16 +309,36 @@ export class UsersComponent extends BaseComponent implements OnInit {
         );
   }
 
-  onEdit(data: IUser){
-    // this.userForm.patchValue({
-    //   id: data.id,
-    //   first_name: data.first_name,
-    //   last_name: [data.last_name, [Validators.required, Validators.minLength(2)]],
-    //   email: [data.email, [Validators.required, Validators.email]],
-    //   mobile_number: [data.mobile_number, [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(11), Validators.maxLength(11)]],
-    //   address: [data.address, [Validators.required]],
-    //   password: ['', [Validators.required, Validators.minLength(6)]],
-    // });
+  onEdit(data: IUser):void
+  {
+    this.userForm.patchValue({
+      id: data.id,
+      package_code_id: data?.package?.code ?? '--',
+      first_name: data.first_name,
+      last_name: data.last_name,
+      email: data.email,
+      mobile_number: data.mobile_number,
+      address: data.address
+    });
+
+    this.passwordControl.clearValidators();
+    this.passwordControl.updateValueAndValidity();
+  }
+
+  onCancel():void
+  {
+    this.userForm.patchValue({
+      id: null,
+      package_code_id: null,
+      first_name: null,
+      last_name: null,
+      email: null,
+      mobile_number: null,
+      address: null,
+      password: null
+    });
+    this.passwordControl.setValidators([Validators.required, Validators.minLength(6)]);
+    this.passwordControl.updateValueAndValidity();
   }
 }
 

@@ -27,6 +27,10 @@ export class UsersService {
     return this._apiService.post('/v1/users', payload);
   }
 
+  updateUser(id: number, payload: any): Observable<any> {
+    return this._apiService.put(`/v1/users/${id}`, payload);
+  }
+
   getMemberships(): Observable<any> {
     const params = {
       sort: 'id',

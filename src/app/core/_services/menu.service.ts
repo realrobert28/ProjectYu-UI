@@ -22,10 +22,16 @@ export class MenuService {
     private _location: Location,
     private _store: Store,
   ) {
+    this.getUser();
+  }
+
+  getUser(): void {
     this.user = this._store.selectSnapshot(AuthState.user);
   }
 
   getItems(): Menu[] {
+    this.getUser();
+
     let items: Menu[];
     switch (this.user.role) {
       case ROLE.SUPERADMIN:

@@ -9,7 +9,10 @@ export interface IUser {
   role?: string;
   permissions?: string[];
   rank?: string;
-  package?: string;
+  packageName?: string;
+  package?: {
+    code?: string
+  };
   createdAt?: string;
   updatedAt?: string;
 }

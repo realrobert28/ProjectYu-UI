@@ -15,7 +15,7 @@
               fxLayout="row wrap"
               fxLayoutAlign="start center"
             >
-              <h2 class="text-2xl m-0">Add</h2>
+              <h2 class="text-2xl m-0">{{idControl.value ? 'Edit' : 'Add'}}</h2>
               <span class="flex-align-end"></span>
             </div>
           </div>
@@ -27,27 +27,41 @@
               [formGroup]="userForm"
               (ngSubmit)="userForm.valid && onSubmit(userForm.value)"
             >
-
-            <mat-form-field appearance="outline" color="primary" class="w-full">
-              <mat-label>Package Code</mat-label>
-              <mat-select [formControl]="packageCodeIdControl" name="pacakgeCode">
-                <mat-option>
-                  <ngx-mat-select-search
-                    ngDefaultControl
-                    [formControl]="searchControl"
-                    placeholderLabel="Search..."
-                    noEntriesFoundLabel="'No records found.'"
-                  ></ngx-mat-select-search>
-                </mat-option>
-                <mat-option
-                  *ngFor="let item of filteredItems | async"
-                  [value]="item.value"
-                  [disabled]="item?.disabled"
-                >
-                  {{item.label}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+              <ng-container *ngIf="idControl.value; else select">
+                <mat-form-field appearance="outline" color="primary" class="w-full">
+                  <mat-label>Package Code</mat-label>
+                  <input
+                    type="text"
+                    formControlName="package_code_id"
+                    placeholder="Package Code"
+                    matInput
+                    aria-label="Package Code"
+                    readonly
+                  />
+                </mat-form-field>
+              </ng-container>
+              <ng-template #select>
+                <mat-form-field appearance="outline" color="primary" class="w-full">
+                  <mat-label>Package Code</mat-label>
+                  <mat-select [formControl]="packageCodeIdControl" name="pacakgeCode" #select>
+                    <mat-option>
+                      <ngx-mat-select-search
+                        ngDefaultControl
+                        [formControl]="searchControl"
+                        placeholderLabel="Search..."
+                        noEntriesFoundLabel="'No records found.'"
+                      ></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option
+                      *ngFor="let item of filteredItems | async"
+                      [value]="item.value"
+                      [disabled]="item?.disabled"
+                    >
+                      {{item.label}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </ng-template>
 
               <!-- <mat-form-field appearance="outline" color="primary" class="w-full">
                 <mat-label>Role</mat-label>
@@ -150,12 +164,12 @@
               </mat-form-field>
 
               <mat-form-field appearance="outline" color="primary" class="w-full">
-                <mat-label>Password</mat-label>
+                <mat-label>{{ idControl.value ? 'Update Password' : 'Password'}}</mat-label>
                 <input
                   matInput
                   formControlName="password"
                   type="text"
-                  placeholder="password"
+                  [placeholder]="idControl.value ? 'Update Password' : 'Password'"
                   aria-label="Password"
                 />
                 <mat-error *ngIf="passwordControl.errors?.required">
@@ -166,8 +180,7 @@
                 </mat-error>
               </mat-form-field>
 
-
-              <div class="mt-8">
+              <div class="mt-5">
                 <button
                     class="w-full"
                     type="submit"
@@ -175,8 +188,19 @@
                     color="primary"
                     [disabled]="userForm.invalid || submitLoading"
                   >
-                  Submit
+                  {{ idControl.value ? 'Update' : 'Submit' }}
                 </button>
+                <div *ngIf="idControl.value" class="mt-5">
+                  <button
+                      class="w-full"
+                      type="submit"
+                      mat-raised-button
+                      color="secondary"
+                      (click)="onCancel()"
+                    >
+                    Cancel
+                  </button>
+                </div>
               </div>
             </form>
           </div>
@@ -342,7 +366,12 @@
 
                 <!-- ACTION Column -->
                 <ng-container matColumnDef="action">
-                  <th scope="col" mat-header-cell *matHeaderCellDef>Action</th>
+                  <th scope="col"
+                    mat-header-cell
+                    *matHeaderCellDef
+                    class="uppercase font-bold">
+                    Action
+                  </th>
                   <td mat-cell *matCellDef="let element">
                     <button
                       mat-icon-button
@@ -356,7 +385,7 @@
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="columns"></tr>
-                <tr mat-row *matRowDef="let row; columns: columns;" [ngClass]="{'bg-slate-300 text-gray-200': row.is_active == false }" (click)="onEdit(row)"></tr>
+                <tr mat-row *matRowDef="let row; columns: columns;" [ngClass]="{'bg-slate-300 text-gray-200': row.is_active == false }" class="hover:bg-blue-200 cursor-pointer" (click)="onEdit(row)"></tr>
 
                 <tr class="mat-row" *matNoDataRow>
                   <td class="mat-cell" [attr.colspan]="columns.length">
