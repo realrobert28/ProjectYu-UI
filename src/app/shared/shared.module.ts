@@ -24,12 +24,14 @@ import { NotificationComponent } from './services/components/notification/notifi
 import { AppListMenuComponent } from './components/app-list-menu/app-list-menu.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { SelectFilterComponent } from './components/select-filter/select-filter.component';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
     NotificationComponent,
     AppListMenuComponent,
-    SelectFilterComponent
+    SelectFilterComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -50,7 +52,8 @@ import { SelectFilterComponent } from './components/select-filter/select-filter.
     MatSelectModule,
     MatCardModule,
     MatMenuModule,
-    IconsModule
+    IconsModule,
+    MatDialogModule
   ],
   exports: [
     FlexLayoutModule,
@@ -58,7 +61,8 @@ import { SelectFilterComponent } from './components/select-filter/select-filter.
     FormsModule,
     ReactiveFormsModule,
     AppListMenuComponent,
-    SelectFilterComponent
+    SelectFilterComponent,
+    ConfirmationDialogComponent
   ],
   providers: [
     ToastService,

@@ -79,6 +79,15 @@ export const routes: Routes = [
           breadcrumb: 'First Gen',
           allowedRoles: [ROLE.SUPERADMIN, ROLE.ADMIN, ROLE.RESELLER],
         }
+      },
+      {
+        path: 'encash',
+        canActivate: [RoleGuard],
+        loadChildren: () => import('./module/encash-admin/encash.module').then(m => m.EncashModule),
+        data: {
+          breadcrumb: 'First Gen',
+          allowedRoles: [ROLE.SUPERADMIN, ROLE.ADMIN, ROLE.RESELLER],
+        }
       }
     ]
   },
