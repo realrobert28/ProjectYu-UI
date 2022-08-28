@@ -59,7 +59,8 @@ import { EncashFilterComponent } from './components/encash-filter/encash-filter.
     MatDatepickerModule,
     NgxMatSelectSearchModule,
     MatMenuModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTooltipModule
   ]
 })
 export class EncashModule { }

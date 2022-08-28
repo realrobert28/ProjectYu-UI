@@ -67,4 +67,21 @@ export class EncashService {
     }
     return this._apiService.post('/v1/encash', payload);
   }
+
+  approveEncash(id?: number): Observable<any> {
+    const payload = {
+      'status': 'approved'
+    };
+
+    return this._apiService.put(`/v1/encash/${id}`, payload);
+  }
+
+  rejectEncash(id?: number, reason?: string): Observable<any> {
+    const payload = {
+      'status': 'rejected',
+      'reason': reason
+    };
+
+    return this._apiService.put(`/v1/encash/${id}`, payload);
+  }
 }

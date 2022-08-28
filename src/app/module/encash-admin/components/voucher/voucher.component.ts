@@ -243,7 +243,7 @@ export class VoucherComponent extends BaseComponent implements OnInit {
       data:{
         message: 'Are you sure want to delete?',
         buttonText: {
-          ok: 'Ye',
+          ok: 'Yes',
           cancel: 'No'
         }
       }

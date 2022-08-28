@@ -11,6 +11,9 @@ import { CustomValidators } from '@core/_utils';
 })
 export class EncashFilterComponent extends FilterComponent {
 
+  @Input()
+  public isAdmin = false;
+
   public minDate: Date;
   public maxDate: Date;
 
@@ -35,6 +38,10 @@ export class EncashFilterComponent extends FilterComponent {
 
   set filterPanel(val: boolean) {
     this.showPanel = val;
+  }
+
+  get encashByControl(): AbstractControl {
+    return this.form.get('encashBy') as FormControl;
   }
 
   get descriptionControl(): AbstractControl {
@@ -81,9 +88,10 @@ export class EncashFilterComponent extends FilterComponent {
 
   protected initForm(): void {
     this.form = this._formBuilder.group({
+      encashBy: [null, CustomValidators.AlphaSpace],
       description: [null, CustomValidators.AlphaSpace],
       points: [null, CustomValidators.numeric],
-      status: [null],
+      status: ['pending'],
       approver: [null, CustomValidators.AlphaSpace],
       date_signed_from: [null, CustomValidators.Date],
       date_signed_to: [null, CustomValidators.Date],

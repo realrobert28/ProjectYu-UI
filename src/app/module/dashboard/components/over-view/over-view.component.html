@@ -13,13 +13,13 @@
         </div>
         <div class="text-left">
           <p class="font-bold">Total Points</p>
-          <p class="font-semibold text-3xl">{{ summary?.total_points | currency:'PHP':'symbol-narrow'}}</p>
+          <p class="font-semibold text-3xl">{{ summary?.total_points}}</p>
         </div>
         <div class="text-left">
           <p class="font-bold">Total First Gen</p>
           <p class="font-semibold text-3xl">{{ summary?.total_users}} Users</p>
         </div>
-        <div class="text-left">
+        <div class="text-left" *ngIf="user?.role != roles.SUPERADMIN">
           <p class="font-bold">Total Available Income</p>
           <p class="font-semibold text-3xl">{{ summary?.total_available_income | currency:'PHP':'symbol-narrow'}}</p>
         </div>

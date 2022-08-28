@@ -5,7 +5,7 @@
     <!-- Fields -->
     <div>
       <div class="p-2 sm:p-10 rounded-3xl shadow-md bg-white mb-3 text-left">
-        <span class="text-xl">Available Points:
+        <span class="text-xl">Available Income:
           <span class="text-green-800 font-bold text-2xl">{{ availablePoints | currency:'PHP':'symbol-narrow' }}</span>
         </span>
       </div>
@@ -32,19 +32,19 @@
               (ngSubmit)="form.valid && onSubmit(form.value)"
             >
             <mat-form-field appearance="outline" color="primary" class="w-full">
-              <mat-label>Points</mat-label>
+              <mat-label>Amount</mat-label>
               <input
                 type="text"
                 formControlName="points"
-                placeholder="Points"
+                placeholder="Amount"
                 matInput
-                aria-label="Points"
+                aria-label="Amount"
               />
               <mat-error *ngIf="pointsControl.errors?.required">
-                Points is required
+                Amount is required
               </mat-error>
               <mat-error *ngIf="pointsControl.errors?.numeric">
-                Points must be numeric
+                Amount must be numeric
               </mat-error>
               <mat-error *ngIf="pointsControl.errors?.insufficient">
                 Points is insufficient
@@ -142,7 +142,7 @@
                   Voucher
                 </th>
                 <td mat-cell *matCellDef="let element" class="uppercase text-left">
-                  {{ element.voucher.description ?? 'By Points' }}
+                  {{ element.voucher.description ?? 'By Amount' }}
                 </td>
               </ng-container>
 
@@ -154,13 +154,12 @@
                   mat-sort-header
                   class="uppercase font-bold"
                 >
-                Points
+                Amount
                 </th>
                 <td mat-cell *matCellDef="let element" class="uppercase text-left">
-                  {{ element.points }}
+                  {{ element.points | currency:'PHP':'symbol-narrow' }}
                 </td>
               </ng-container>
-
 
               <ng-container matColumnDef="status">
                 <th
@@ -176,7 +175,6 @@
                   {{ element.status ?? '--' }}
                 </td>
               </ng-container>
-
 
               <ng-container matColumnDef="reason">
                 <th
@@ -203,7 +201,7 @@
                 >
                   Approver
                 </th>
-                <td mat-cell *matCellDef="let element" class="uppercase text-center">
+                <td mat-cell *matCellDef="let element" class="uppercase text-center" >
                   {{ element.approveBy.name ?? '--' }}
                 </td>
               </ng-container>
@@ -222,7 +220,6 @@
                   {{ element.created_at | date:'MMM d, y' }}
                 </td>
               </ng-container>
-
 
               <ng-container matColumnDef="date_signed">
                 <th
@@ -306,8 +303,8 @@
                 <span>description</span>
               </div>
               <div class="name">
-                <div class="text-lg text-green-800">{{item.points}}</div>
-                <span>Points</span>
+                <div class="text-lg text-green-800">{{item.points | currency:'PHP':'symbol-narrow' }}</div>
+                <span>Amount</span>
               </div>
             </div>
             <div class="card cardRight">
