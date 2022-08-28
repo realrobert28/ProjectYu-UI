@@ -115,6 +115,9 @@ export class EncashmentComponent extends BaseComponent implements OnInit {
   /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
   onAppFilter(filters: any): void {
     Object.assign(this.pageState.filters, { ...filters });
+    this.columns = [
+      'id', 'encashBy.name', 'voucher.description', 'points', 'status', 'created_at', 'approveBy.name', 'reason', 'date_signed'
+    ];
     this.fetchData({ pageIndex: 0, pageSize: this.pageState.limit });
   }
 
@@ -131,6 +134,9 @@ export class EncashmentComponent extends BaseComponent implements OnInit {
       date_from: '',
       date_to: '',
     });
+    this.columns = [
+      'id', 'encashBy.name', 'voucher.description', 'points', 'status', 'created_at', 'approveBy.name', 'reason', 'date_signed', 'action'
+    ];
     this.fetchData({ pageIndex: 0, pageSize: this.pageState.limit });
   }
 
