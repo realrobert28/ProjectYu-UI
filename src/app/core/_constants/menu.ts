@@ -19,7 +19,7 @@ export const resellerMenuItems = [
   new Menu(1, 'Dashboard', '/app/dashboard', '', '', '', false, 0, false, true),
   new Menu(6, 'Product Code', '/app/product-code', '', '', '', false, 0, false, true),
   new Menu(7, 'First Gen', '/app/first-gen', '', '', '', false, 0, false, true),
-  new Menu(5, 'Encash', '/app/encashment', '', '', '', false, 0, false, true),
+  new Menu(5, 'Encash', '/app/encash', '', '', '', false, 0, false, true),
 ];
 
 export const userMenuItems = [

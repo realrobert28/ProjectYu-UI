@@ -17,4 +17,8 @@ export class CommonService  {
 
     return this._apiService.get('/v1/memberships', params);
   }
+
+  getAvailablePoints(): Observable<any> {
+    return this._apiService.get('/v1/available-points');
+  }
 }

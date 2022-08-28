@@ -24,6 +24,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { SharedModule } from '@shared/shared.module';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { VoucherFilterComponent } from './components/voucher-filter/voucher-filter.component';
+import { ResellerLandingComponent } from './pages/reseller-landing/reseller-landing.component';
+import { EncashFilterComponent } from './components/encash-filter/encash-filter.component';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { VoucherFilterComponent } from './components/voucher-filter/voucher-filt
     LandingComponent,
     EncashmentComponent,
     VoucherComponent,
-    VoucherFilterComponent
+    VoucherFilterComponent,
+    ResellerLandingComponent,
+    EncashFilterComponent
 
   ],
   imports: [

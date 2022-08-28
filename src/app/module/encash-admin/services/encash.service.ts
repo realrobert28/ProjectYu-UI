@@ -11,14 +11,17 @@ export class EncashService {
 
   constructor(private _apiService: ApiService) { }
 
-  getVouchers(pageState: PageState): Observable<IPageState> {
-    const params = {
-      ...setFilters(pageState.filters ?? {}),
-      limit: pageState.limit,
-      page: pageState.page + 1,
-      sort: pageState.sort || 'id',
-      direction: pageState.sortDirection || 'desc'
-    };
+  getVouchers(pageState?: PageState): Observable<IPageState> {
+    let params = {};
+    if(pageState) {
+      params = {
+        ...setFilters(pageState?.filters ?? {}),
+        limit: pageState.limit,
+        page: pageState.page + 1,
+        sort: pageState.sort || 'id',
+        direction: pageState.sortDirection || 'desc'
+      };
+    }
 
     return this._apiService.get('/v1/vouchers', params);
   }
@@ -42,5 +45,26 @@ export class EncashService {
     };
 
     return this._apiService.get('/v1/voucher-categories', params);
+  }
+
+  getRequestEncash(pageState: PageState): Observable<IPageState> {
+    const params = {
+      ...setFilters(pageState?.filters ?? {}),
+      limit: pageState.limit,
+      page: pageState.page + 1,
+      sort: pageState.sort || 'id',
+      direction: pageState.sortDirection || 'desc'
+    };
+
+    return this._apiService.get('/v1/encash', params);
+  }
+
+  requestEncash(id?: number, payload?: any): Observable<any>{
+    if(id) {
+      payload = {
+        'voucher_id': id
+      };
+    }
+    return this._apiService.post('/v1/encash', payload);
   }
 }

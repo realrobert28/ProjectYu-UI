@@ -14,7 +14,6 @@ import { IMembership } from 'src/app/module/users/models';
 })
 export class PackageFilterComponent extends FilterComponent {
 
-
   @Input()
   public memberships!: Array<IMembership>;
 
