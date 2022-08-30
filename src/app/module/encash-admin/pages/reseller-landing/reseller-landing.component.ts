@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -9,6 +10,7 @@ import { IGeneralResponse } from '@core/_models';
 import { CommonService } from '@core/_services';
 import { PageState, IPageState } from '@core/_types';
 import { CustomValidators } from '@core/_utils';
+import { ConfirmationDialogComponent } from '@shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ToastService } from '@shared/services';
 import { takeUntil } from 'rxjs';
 import { IPackage } from 'src/app/module/packages/models';
@@ -77,6 +79,7 @@ export class ResellerLandingComponent extends BaseComponent implements OnInit {
     private _toastr: ToastService,
     private _commonService: CommonService,
     private _service: EncashService,
+    private _dialog: MatDialog
   ) {
     super();
     this.getAvailablePoints();
@@ -175,19 +178,19 @@ export class ResellerLandingComponent extends BaseComponent implements OnInit {
     .pipe(takeUntil(this._subscription))
         .subscribe(
           (res: any) => {
-            this._onSuccess(res);
+            this._onSuccess('Cash out', res);
           },
           (err: any) => this._onError(err)
         );
     this.form.reset();
   }
 
-  private _onSuccess(res: IGeneralResponse): void {
+  private _onSuccess(mes: string, res: IGeneralResponse,): void {
     this.submitLoading = false;
     this.onReload();
     this.getAvailablePoints();
     this._toastr.notifyAction({
-      title: 'Package Saved.',
+      title: mes,
       message: res.message,
       type: 'success'
     });
@@ -238,15 +241,30 @@ export class ResellerLandingComponent extends BaseComponent implements OnInit {
   }
 
   useVoucher(id: number): void {
-    this._service.requestEncash(id, null)
-    .pipe(takeUntil(this._subscription))
-        .subscribe(
-          (res: any) => {
-            this._onSuccess(res);
-            this.getAvailablePoints();
-          },
-          (err: any) => this._onError(err)
-        );
+
+    const dialogRef = this._dialog.open(ConfirmationDialogComponent,{
+      data:{
+        message: 'Are you sure want to claim this voucher?',
+        buttonText: {
+          ok: 'Yes',
+          cancel: 'No'
+        }
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this._service.requestEncash(id, null)
+        .pipe(takeUntil(this._subscription))
+            .subscribe(
+              (res: any) => {
+                this._onSuccess('Voucher.',res);
+                this.getAvailablePoints();
+              },
+              (err: any) => this._onError(err)
+            );
+      }
+    });
   }
 
   /* eslint-disable @typescript-eslint/explicit-module-boundary-types */

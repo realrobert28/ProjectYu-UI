@@ -2,7 +2,7 @@
   <div class="text-center">
     <div *ngIf="user?.role != roles.SUPERADMIN">
       <p class="text-green-700 font-bold text-4xl">{{ user?.fullName }}</p>
-      <p class="italic text-xl pt-1">{{ user?.packageName | uppercase }} / {{ user?.rank | uppercase }}</p>
+      <p class="italic text-xl pt-1">{{ user?.membership | uppercase }} / {{ user?.rank | uppercase }}</p>
     </div>
 
     <div class="my-10">
