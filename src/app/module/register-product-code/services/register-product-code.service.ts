@@ -20,7 +20,7 @@ export class RegisterProductCodeService {
       direction: pageState.sortDirection || 'desc'
     };
 
-    return this._apiService.get('/v1/reseller/', params);
+    return this._apiService.get('/v1/reseller', params);
   }
 
   registerProductCode(payload: any): Observable<any> {

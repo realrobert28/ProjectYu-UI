@@ -24,7 +24,7 @@ export class DashboardService {
       direction: pageState.sortDirection || 'desc'
     };
 
-    return this._apiService.get('/v1/recent-points/', params);
+    return this._apiService.get('/v1/recent-points', params);
   }
 
   getRecentFirstGen(pageState: PageState): Observable<IPageState> {
