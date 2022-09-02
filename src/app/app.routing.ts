@@ -1,5 +1,5 @@
 import { Routes, RouterModule } from '@angular/router';
-import { ROLE } from '@core/_constants';
+import { ROLE, ROLES } from '@core/_constants';
 import { DefaultComponent } from '@core/_layout/default/default.component';
 import { AuthGuard, RoleGuard} from '@core/_guards';
 import { NotAllowedComponent } from '@core/_pages/not-allowed/not-allowed.component';
@@ -86,7 +86,7 @@ export const routes: Routes = [
         loadChildren: () => import('./module/encash-admin/encash.module').then(m => m.EncashModule),
         data: {
           breadcrumb: 'First Gen',
-          allowedRoles: [ROLE.SUPERADMIN, ROLE.ADMIN, ROLE.RESELLER],
+          allowedRoles: [ROLE.SUPERADMIN, ROLE.ADMIN, ROLE.RESELLER, ROLE.USER],
         }
       }
     ]

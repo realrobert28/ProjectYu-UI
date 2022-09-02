@@ -25,4 +25,5 @@ export const resellerMenuItems = [
 export const userMenuItems = [
   new Menu(1, 'Dashboard', '/app/dashboard', '', 'pie_chart', '', false, 0, false, true),
   new Menu(6, 'Product Code', '/app/product-code', '', '', '', false, 0, false, true),
+  new Menu(5, 'Encash', '/app/encash', '', '', '', false, 0, false, true),
 ];

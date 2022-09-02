@@ -240,16 +240,28 @@ export class ResellerLandingComponent extends BaseComponent implements OnInit {
     this.fetchData({ pageIndex: 0, pageSize: this.pageState.limit });
   }
 
-  useVoucher(id: number): void {
+  useVoucher(id: number, points: number): void {
 
-    const dialogRef = this._dialog.open(ConfirmationDialogComponent,{
-      data:{
-        message: 'Are you sure want to claim this voucher?',
+    let data = {
+      message: 'Are you sure want to claim this voucher?',
+      buttonText: {
+        ok: 'Yes',
+        cancel: 'No'
+      }
+    };
+
+    if(this.availablePoints == 0 || this.availablePoints < points) {
+      data = {
+        message: 'Insufficient Available amount.',
         buttonText: {
-          ok: 'Yes',
-          cancel: 'No'
+          ok: null,
+          cancel: 'OKAY'
         }
       }
+    }
+
+    const dialogRef = this._dialog.open(ConfirmationDialogComponent,{
+      data: data
     });
 
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {

@@ -11,8 +11,8 @@ export class ConfirmationDialogComponent {
 
   public form!: FormGroup;
   message: string = "Are you sure?";
-  confirmButtonText = "Yes";
-  cancelButtonText = "Cancel";
+  confirmButtonText = null;
+  cancelButtonText = null;
   hasReason: boolean = false;
 
   get reasonControl(): any { return this.form.controls['reason']; }
@@ -26,8 +26,8 @@ export class ConfirmationDialogComponent {
         this.hasReason = data.hasReason || this.hasReason;
 
         if (data.buttonText) {
-          this.confirmButtonText = data.buttonText.ok || this.confirmButtonText;
-          this.cancelButtonText = data.buttonText.cancel || this.cancelButtonText;
+          this.confirmButtonText = data.buttonText.ok || null;
+          this.cancelButtonText = data.buttonText.cancel || null;
         }
 
         this.form = this._formBuilder.group({

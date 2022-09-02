@@ -1,6 +1,6 @@
 <div class="container mx-auto px-4">
   <div class="py-5">
-    <div *ngIf="user.role != roles.RESELLER">
+    <div *ngIf="user.role == roles.SUPER_ADMIN else otherUser">
       <h1 class="text-4xl font-bold">Encash & Voucher</h1>
       <div class="mt-5">
         <mat-tab-group mat-align-tabs="start">
@@ -14,8 +14,8 @@
       </div>
     </div>
 
-    <div *ngIf="user.role == roles.RESELLER">
+    <ng-template #otherUser>
       <app-reseller-landing></app-reseller-landing>
-    </div>
+    </ng-template>
   </div>
 </div>
