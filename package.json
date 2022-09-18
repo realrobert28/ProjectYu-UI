@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "prod-build": "export NODE_ENV=production && ng build --configuration production --configuration production && cp .htaccess dist"
   },
   "private": true,
   "dependencies": {
